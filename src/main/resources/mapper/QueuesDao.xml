@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="projects.bing.dao.QueuesDao">
+
+    <!--新增-->
+    <insert id="add"  parameterType="projects.bing.entity.Queues">
+        INSERT INTO queues (id,name,rightnow,tail,description,temp1,temp2,temp3)
+        VALUES (#{id}, #{name},#{rightnow},#{tail},#{description},#{temp1},#{temp2},#{temp3})
+    </insert>
+
+    <!--更新 -->
+    <update id="update"  parameterType="projects.bing.entity.Queues">
+        UPDATE  queues  SET
+          name = #{name},
+          rightnow = #{rightnow},
+          tail = #{tail},
+          description = #{description},
+          temp1 = #{temp1},
+          temp2 = #{temp2},
+          temp3 = #{temp3}
+        WHERE id  =  #{id}
+    </update>
+    <!--开关-->
+    <update id="updateStatus" parameterType="java.lang.String">
+        UPDATE  queues SET  is_open = is_open*(-1) where id = #{id}
+    </update>
+    <!--清零-->
+    <update id="setZero" parameterType="java.lang.String">
+        UPDATE  queues SET  rightnow=0,tail=0 where id = #{id}
+    </update>
+    <!--删除 -->
+    <delete id="delete" parameterType="java.lang.String" >
+        DELETE FROM queues WHERE  id = #{id}
+    </delete>
+
+    <!--查询一个   -->
+    <select id="getOne" resultType="projects.bing.entity.Queues" parameterType="java.lang.String">
+        select * from queues where id = #{id}
+    </select>
+
+    <!--查询全部 -->
+    <select id="getAll" resultType="projects.bing.entity.Queues" >
+        select * from queues
+    </select>
+
+    <!--查询全部open -->
+    <select id="getAllOpen" resultType="projects.bing.entity.Queues" >
+        select * from queues where is_open>0 order by temp1 ASC
+    </select>
+
+    <update id="callNumber" parameterType="java.lang.String">
+        UPDATE QUEUES T SET T.RIGHTNOW = T.RIGHTNOW+1 WHERE T.ID = #{qid}
+    </update>
+</mapper>

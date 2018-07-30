@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="projects.bing.dao.UserDao">
+
+
+    <!--新增 -->
+    <insert id="add"  parameterType="projects.bing.entity.User">
+        INSERT INTO user (id,wxid,nickname,total_score,times,mynumber,stage_score,reward_flag,rewards,number_time,temp1,temp2,temp3)
+        VALUES (#{id},#{wxid},#{nickname},#{totalScore},#{times},
+                #{mynumber},#{stageScore},#{rewardFlag}, #{rewards},#{numberTime},
+                #{temp1},#{temp2},#{temp3})
+
+
+    </insert>
+
+    <!--更新 -->
+    <update id="update"  parameterType="projects.bing.entity.User">
+        UPDATE user
+        <trim prefix="set" suffixOverrides=",">
+            <if test="id!=null">id=#{id},</if>
+            <if test="wxid!=null">wxid=#{wxid},</if>
+            <if test="nickname!=null">nickname=#{nickname},</if>
+            <if test="totalScore!=null">total_score=#{totalScore},</if>
+            <if test="times!=null">mynumber=#{mynumber},</if>
+            <if test="stageScore!=null">stage_score=#{stageScore},</if>
+            <if test="rewardFlag!=null">reward_flag=#{rewardFlag},</if>
+            <if test="rewards!=null">rewards=#{rewards},</if>
+            <if test="numberTime!=null">number_time=#{numberTime},</if>
+            <if test="temp1!=null">temp1=#{temp1},</if>
+            <if test="temp2!=null">temp2=#{temp2},</if>
+            <if test="temp3!=null">temp3=#{temp3},</if>
+        </trim>
+        WHERE id=#{id}
+    </update>
+
+
+    <!--删除-->
+    <delete id="delete" parameterType="java.lang.String" >
+        DELETE FROM user WHERE  id = #{id}
+    </delete>
+
+    <!--查询一个 -->
+    <select id="getOne" resultType="projects.bing.entity.User" parameterType="java.lang.String">
+        select * from user where id = #{id}
+    </select>
+
+    <!--查询全部 -->
+    <select id="getAll" resultType="projects.bing.entity.User" >
+        select * from User
+    </select>
+
+    <!--查询一个 -->
+    <select id="getByWxid" resultType="projects.bing.entity.User" parameterType="java.lang.String">
+        select * from user where wxid = #{wxid}
+    </select>
+
+    <update id="updateTableNum" parameterType="java.lang.String" >
+        UPDATE  user t SET t.temp1 = #{tableNumber} where t.mynumber = #{rightNow}
+    </update>
+</mapper>
