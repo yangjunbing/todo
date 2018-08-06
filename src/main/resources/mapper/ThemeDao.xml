@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="projects.bing.dao.ThemeDao">
+
+
+    <insert id="add"  parameterType="projects.bing.entity.Theme">
+        INSERT INTO Theme (id,typeid,name,imgsrc,description ,temp1,temp2,temp3,temp4,temp5,position ,type_name)
+        VALUES (#{id},#{typeid},#{name},#{imgsrc},#{description},#{temp1},#{temp2},#{temp3},#{temp4},#{temp5},#{position },#{typeName})
+    </insert>
+
+
+    <update id="update"  parameterType="projects.bing.entity.Theme">
+        UPDATE  Theme  SET
+          tpeid = #{typeid},
+          name = #{name},
+          imgsrc = #{imgsrc},
+          description = #{description},
+          temp1 = #{temp1},
+          temp2 = #{temp2},
+          temp2 = #{temp3},
+          temp2 = #{temp4},
+          temp3 = #{temp5}
+        WHERE id  =  #{id}
+    </update>
+
+
+    <delete id="delete" parameterType="java.lang.String" >
+        DELETE FROM Theme WHERE  id = #{id}
+    </delete>
+
+
+    <select id="getOne" resultType="projects.bing.entity.Theme" parameterType="java.lang.String">
+        select * from Theme where id = #{id}
+    </select>
+
+    <!--查询全部 -->
+    <select id="getAll" resultType="projects.bing.entity.Theme" >
+        select * from Theme order by position ASC
+    </select>
+
+</mapper>

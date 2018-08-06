@@ -1,4 +1,3 @@
-<%@ page import="projects.bing.entity.Admin" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="tags.jsp"%>
 <html>
@@ -24,7 +23,7 @@
             <a href="#" class="navbar-brand">
                 <small>
                     <i class="icon-leaf"></i>
-                    ACE后台管理系统
+                    TODO后台管理系统
                 </small>
             </a><!-- /.brand -->
         </div><!-- /.navbar-header -->
@@ -60,39 +59,16 @@
             </script>
 
             <ul class="nav nav-list">
-                <li class="active">
-                    <a href="<%=ctx%>/admin/index1">
-                        <i class="icon-dashboard"></i>
-                        <span class="menu-text"> 控制台 </span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="<%=ctx%>/queues/queuesForm" >
-                        <i class="icon-list"></i>
-                        <span class="menu-text"> 队列管理 </span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="<%=ctx%>/types/typesForm" >
-                        <i class="icon-list"></i>
-                        <span class="menu-text"> 分类管理 </span>
-                    </a>
-                </li>
-                <li>
-                    <a href="<%=ctx%>/menu/menuForm" >
-                        <i class="icon-list"></i>
-                        <span class="menu-text"> 菜单管理 </span>
-                    </a>
-                </li>
-                <li>
-                    <a href="<%=ctx%>/admin/adminForm" >
-                        <i class="icon-list"></i>
-                        <span class="menu-text"> 用户管理 </span>
-                    </a>
-                </li>
-            </ul><!-- /.nav-list -->
+                <c:forEach var="menu" items="${menus}" varStatus="index">
+                    <li>
+                        <a href="<%=ctx%>${menu.url}" >
+                            <i class="icon-list"></i>
+                            <span class="menu-text"> ${menu.name} </span>
+                        </a>
+                    </li>
+                </c:forEach>
+            </ul>
+            <!-- /.nav-list -->
 
             <div class="sidebar-collapse" id="sidebar-collapse">
                 <i class="icon-double-angle-left" data-icon1="icon-double-angle-left" data-icon2="icon-double-angle-right"></i>

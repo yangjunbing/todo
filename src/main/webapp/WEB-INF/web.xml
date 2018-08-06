@@ -6,7 +6,7 @@
 
 
   <servlet>
-    <servlet-name>restaurant-dispatcher</servlet-name>
+    <servlet-name>todo-dispatcher</servlet-name>
     <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
     <init-param>
       <param-name>contextConfigLocation</param-name>
@@ -14,7 +14,7 @@
     </init-param>
   </servlet>
   <servlet-mapping>
-    <servlet-name>restaurant-dispatcher</servlet-name>
+    <servlet-name>todo-dispatcher</servlet-name>
     <url-pattern>/</url-pattern>
   </servlet-mapping>
 </web-app>

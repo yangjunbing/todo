@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import projects.bing.dto.JsonResult;
-import projects.bing.entity.Admin;
-import projects.bing.entity.Queues;
+import projects.bing.entity.AdminUser;
+import projects.bing.entity.Menu;
 import projects.bing.service.AdminService;
-import projects.bing.service.QueuesService;
+import projects.bing.service.MenuService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -29,26 +29,24 @@ public class AdminController {
     private AdminService adminService;
 
     @Autowired
-    private QueuesService  queuesService;
+    private  MenuService menuService;
+
     //验证账号密码  根据角色跳转到对应页面
     @RequestMapping(value="index")
-    public ModelAndView validate(Admin admin, HttpSession httpSession){
+    public ModelAndView validate(AdminUser admin, HttpSession httpSession){
         String view;
         ModelAndView mv =new ModelAndView();
         mv.addObject("admin",admin);//用于回显
-        Admin a = adminService.validate(admin.getAccount());
+        AdminUser a = adminService.validate(admin.getAccount());
         if(a==null){
             mv.addObject("message","用户名不存在！");
              view = "adminLogin";
         }else{
             if(a.getPassword().equals(admin.getPassword())){
                 httpSession.setAttribute("admin",a);
+                List<Menu> menus = menuService.getAll();
+                mv.addObject("menus",menus);
                 view = "index";
-                if(a.getRole()==1){
-                    List<Queues>  queues =  queuesService.getAll();
-                    mv.addObject("queuesList",queues);
-                    view = "callNumber";
-                }
             }else{
                 mv.addObject("message","密码错误，请重试！");
                 view = "adminLogin";
@@ -58,15 +56,16 @@ public class AdminController {
         return mv;
     }
 
-    //新增或保存
+ /*   //新增或保存
     @RequestMapping(value="addOrEdit" , method = RequestMethod.POST,
             produces = "application/json;charset=utf-8")
     @ResponseBody
-    public JsonResult saveOrEdit(Admin admin){
+    public JsonResult saveOrEdit(AdminUser admin){
         JsonResult jr ;
         String message = null;
         boolean flag = false;
         if("".equals(admin.getId())){  //新增
+             admin.setId(IdGen.getUUID32());
              flag = adminService.add(admin) > 0  ? true : false;
              message = "添加成功↖(^ω^)↗";
         }else{
@@ -78,7 +77,7 @@ public class AdminController {
         }
         jr = new JsonResult(flag,message);
         return jr;
-    }
+    }*/
 
     //根据id查询
     @RequestMapping(value="getOne" , method = RequestMethod.POST,
@@ -87,7 +86,7 @@ public class AdminController {
     public JsonResult getOne(String id){
         JsonResult jr ;
         boolean flag = true;
-        Admin admin = adminService.getOne(id);
+        AdminUser admin = adminService.getOne(id);
         jr = new JsonResult(flag,admin);
         return jr;
     }
@@ -116,14 +115,16 @@ public class AdminController {
     //跳转到管理员用户管理页面
     @RequestMapping(value = "adminForm")
     public String toAdminForm(Model model){
-        List<Admin>  adminList = adminService.getAll();
+        List<AdminUser>  adminList = adminService.getAll();
         model.addAttribute("adminList",adminList);
         return "adminForm";
     }
 
     //跳转到控制台页面
     @RequestMapping(value = "index1")
-    public String toIndex(){
+    public String toIndex(Model model){
+        List<Menu> menus = menuService.getAll();
+        model.addAttribute("menus",menus);
         return "index";
     }
 }

@@ -1,22 +1,35 @@
 package projects.bing.entity;
 
-import org.apache.commons.lang3.math.NumberUtils;
-
-import java.util.Date;
-
-/**
- * Created by yang on 2017/2/18.
- */
-public class Foods {
-    private String  id;
-    private Types type;
+public class Theme {
+    private String id;
+    private String typeid;
     private String name;
-    private double price;
     private String description;
     private String imgsrc;
+    private String typeName;
+    private int position;
     private String temp1;
     private String temp2;
     private String temp3;
+    private String temp4;
+    private String temp5;
+
+
+    public String getTypeName() {
+        return typeName;
+    }
+
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
+    }
+
+    public int getPosition() {
+        return position;
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
+    }
 
     public String getId() {
         return id;
@@ -26,12 +39,12 @@ public class Foods {
         this.id = id;
     }
 
-    public Types getType() {
-        return this.type;
+    public String getTypeid() {
+        return typeid;
     }
 
-    public void setType(Types  type) {
-       this.type = type;
+    public void setTypeid(String typeid) {
+        this.typeid = typeid;
     }
 
     public String getName() {
@@ -40,17 +53,6 @@ public class Foods {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(String price)
-    {
-        if(NumberUtils.isNumber(price)) {
-            this.price = Double.valueOf(price);
-        }
     }
 
     public String getDescription() {
@@ -92,16 +94,20 @@ public class Foods {
     public void setTemp3(String temp3) {
         this.temp3 = temp3;
     }
-    /*
-* 	id bigint not null comment '菜品表id',
-	typeid bigint comment '分类id',
-	name varchar(255) comment '名称',
-	price numeric(9,2) comment '价格',
-	description varchar(255) comment '描述',
-	imgsrc varchar(255) comment '图片位置',
- 	temp1 varchar(255) comment '总价',
-    temp2 varchar(255) comment '预留字段2',
-    temp3 varchar(255) comment '预留字段3',
 
-* */
+    public String getTemp4() {
+        return temp4;
+    }
+
+    public void setTemp4(String temp4) {
+        this.temp4 = temp4;
+    }
+
+    public String getTemp5() {
+        return temp5;
+    }
+
+    public void setTemp5(String temp5) {
+        this.temp5 = temp5;
+    }
 }

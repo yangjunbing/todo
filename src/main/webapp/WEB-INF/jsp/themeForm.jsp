@@ -17,12 +17,21 @@
     <link rel="stylesheet" href="<%=ctx%>/statics/css/ace.min.css" />
     <link rel="stylesheet" href="<%=ctx%>/statics/css/ace-rtl.min.css" />
     <link rel="stylesheet" href="<%=ctx%>/statics/css/ace-skins.min.css" />
-    <link rel="stylesheet" href="<%=ctx%>/statics/css/picCut.css">
-<style>
-    .imgbox{
-        width: 100px;
-        height: auto;
-    }
+    <script src="<%=ctx%>/statics/js/ace-extra.min.js"></script>
+
+    <style>
+
+        .container{
+            margin-left: 210px;
+            margin-right: 0px;
+        }
+
+        .main-content {
+            margin-left: 0px;
+        }
+        .row{
+            width: 1680px;
+        }
 </style>
 </head>
 <body>
@@ -46,7 +55,7 @@
 
                 <li class="light-blue">
                    <% HttpSession s = request.getSession();
-                    AdminUser a = (AdminUser) s.getAttribute("admin");
+                       AdminUser a = (AdminUser)s.getAttribute("admin");
                     %>
                     欢迎,<%=a.getName() %> &nbsp;&nbsp;
                 </li>
@@ -74,7 +83,7 @@
             </script>
 
             <ul class="nav nav-list">
-                <c:forEach var="menu" items="${list}">
+                <c:forEach var="menu" items="${menus}" varStatus="index">
                     <li>
                         <a href="<%=ctx%>${menu.url}" >
                             <i class="icon-list"></i>
@@ -102,7 +111,7 @@
                 <ul class="breadcrumb">
                     <li>
                         <i class="icon-home home-icon"></i>
-                            菜单管理
+                            主题管理
                     </li>
                 </ul><!-- .breadcrumb -->
             </div>
@@ -110,7 +119,7 @@
 
             <div class="container">
                 <div class="row">
-                    <div class="col-md-8">
+                    <div class="col-md-9">
                         <div class="space-6"></div>
                         <div class="table-responsive">
                             <table id="sample-table-1" class="table table-striped table-bordered table-hover">
@@ -122,37 +131,49 @@
                                             <span class="lbl"></span>
                                         </label>
                                     </th>
+                                    <th>图片</th>
                                     <th>名称</th>
-                                    <th>链接地址</th>
-                                    <th>排序</th>
+                                    <th>类别</th>
+                                    <th>描述</th>
+                                    <th>排序号</th>
                                     <th style="align-content: center">操作</th>
                                 </tr>
                                 </thead>
 
                                 <tbody>
-                                <c:forEach items="${list}" var="menu">
-                                <tr id="tr_${menu.id}">
+                                <c:forEach items="${themeList}" var="theme">
+                                <tr id="tr_${theme.id}">
                                     <td class="center">
                                         <label>
-                                            <input type="checkbox" class="ace" value="${menu.id}"/>
+                                            <input type="checkbox" class="ace" value="${theme.id}"/>
                                             <span class="lbl"></span>
                                         </label>
                                     </td>
-
-                                    <td>${menu.name}</td>
-                                    <td>${menu.url}</td>
-                                    <td>${menu.position}</td>
-<%--
-                                    <td  class="testLi" > <img src=<%=ctx%>/picture/getPicture?path=${menu.imgsrc}  class="img imgbox" hidden="true"> </td>
---%>
                                     <td>
-                                        <button class="btn btn-xs btn-info" onclick="edit('${menu.id}')">
-                                        <i class="icon-edit bigger-120"></i>
+                                        <img src=<%=ctx%>/picture/getPicture?path=${theme.imgsrc}  style="width: 200px;height: 160px" >
+                                    </td>
+                                    <td>
+                                            ${theme.name}
+                                    </td>
+                                    <td>
+                                            ${theme.typeName}
+                                    </td>
+                                    <td>
+                                            ${theme.description}
+                                    </td>
+                                    <td>${theme.position}</td>
+                                    <td>
+                                            <button class="btn btn-xs btn-info" onclick="edit('${theme.id}')">
+                                                <i class="icon-edit bigger-120"></i>
                                             </button>
 
-                                        <button class="btn btn-xs btn-danger" onclick="del('${menu.id}')">
-                                            <i class="icon-trash bigger-120"></i>
-                                        </button>
+                                            <button class="btn btn-xs btn-danger" onclick="del('${theme.id}')">
+                                                <i class="icon-trash bigger-120"></i>
+                                            </button>
+
+                                            <button class="btn btn-xs btn-success" onclick="list('${theme.id}')">
+                                                <i class="icon-check bigger-120"></i>
+                                            </button>
                                     </td>
                                 </tr>
                                 </c:forEach>
@@ -161,30 +182,46 @@
                         </div><!-- /.table-responsive -->
                     </div>
 
-                    <div class ="col-md-4">
-                    <form id="menuform" class="form-horizontal" style="border:thin solid #e5e5e5; border-radius: 3px">
-                        <input type="hidden" name="id" id="id"  />
+                    <div class ="col-md-3">
+                    <form id="themeform" class="form-horizontal" style="border:thin solid #e5e5e5; border-radius: 3px">
+                        <input type="hidden" name="id" id="themeid"  />
+                        <div class="form-group">
+                            <div class="space-6"></div>
+                            <label  class="col-sm-2 control-label">类别</label>
+                            <div class="col-sm-9">
+                                <select class="form-control" id="typeid" name="typeid" onchange="setTypeName()">
+                                    <c:forEach var="type" items="${typesList}">
+                                        <option value="${type.id}">${type.name}</option>
+                                    </c:forEach>
+                                </select>
+                                <input type = "hidden" id = "typeName" name="typeName" value="">
+                            </div>
+                        </div>
+
                         <div class="form-group">
                             <label  class="col-sm-2 control-label">名称</label>
                             <div class="col-sm-9">
-                                <input type="text" name="name" class="form-control" id="name" placeholder="请输入名称">
+                                <input type="text" name="name" class="form-control" id="name" placeholder="请输入主题名称">
                             </div>
                         </div>
 
-
-                        <div class="form-group">
-                            <label  class="col-sm-2 control-label">链接地址</label>
-                            <div class="col-sm-9">
-                                <input type="text" name="url" class="form-control" id="url" placeholder="请输入链接">
-                            </div>
-                        </div>
                         <div class="form-group">
                             <label  class="col-sm-2 control-label">排序</label>
                             <div class="col-sm-9">
-                                <input type="text" name="position" class="form-control" id="position" placeholder="请输入排序">
+                                <input type="text" name="position" class="form-control" id="position" placeholder="请输入排序号">
                             </div>
                         </div>
-                        <%--<div class="form-group">
+
+                        <div class="form-group">
+                            <label  class="col-sm-2 control-label">描述</label>
+                            <div class="col-sm-9">
+                                <textarea name="description" id="description" cols="33" rows="10">
+
+                                </textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
                             <label  class="col-sm-2 control-label">图片</label>
                             <div class ="col-md-9">
                                 <button type="button" onclick="choosePicture()" class="btn btn-white" >添加图片</button>
@@ -195,15 +232,15 @@
                         <div class="form-group">
                             <label  class="col-sm-2 control-label"> </label>
                             <div class ="col-md-9">
-                                <img src="" class="imgbox" id="imgbox">
+                                <img src="" class="imgbox" id="imgbox" width="313px">
                             </div>
-                        </div>--%>
+                        </div>
 
                         <div class="alert alert-warning alert-dismissible" id="info"  hidden="true">
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                 <span aria-hidden="true">&times;</span></button>
-                        </div>
 
+                        </div>
                         <button type="button"  onclick="addOrEdit(this.form)" class="btn btn-success btn-lg btn-block" id="btn_add">新增</button>
                         <div class="space-6"></div>
                     </form>
@@ -212,18 +249,44 @@
             </div>
         </div><!-- /.main-content -->
     </div>
-    <div style="display: none">
-        <input  name="picture" id="fileInput" type="file" onchange="uploadPicture()">
-    </div>
 </div>
-</body>
+
+
+<div style="display: none">
+    <input  name="picture" id="fileInput" type="file" onchange="uploadPicture()">
+</div>
+
 <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
     <i class="icon-double-angle-up icon-only bigger-110"></i>
 </a>
 <script type="application/javascript">
+    //提交新增或修改
+    function addOrEdit(form){
+        var type = $("#typeid").find("option:selected").text();
+        $('#typeName').val(type)
+        console.log($('#typeName').val());
+        $.ajax({
+            url:   "<%=ctx%>/theme/saveOrEdit",
+            data:  $('#themeform').serialize(),
+            async: false,
+            type:  "POST",
+            success:function(result){
+                if(result.flag==true){
+                    $('#info').removeClass('alert-warning');
+                    $('#info').addClass('alert-success');
+                    $('#info').text(result.data);
+                    $('#info').show();
+                    setTimeout("self.location.reload()",3000);
+                }
+            }
+        });
+
+    }
+
     function  choosePicture(){   //点击普通按钮触发文件选择
         $('#fileInput').click();
     }
+
     //选择文件后上传
     function uploadPicture(){
         var formData = new FormData();
@@ -249,53 +312,23 @@
 
     }
 
-    //提交新增或修改
-    function addOrEdit(form){
-        if(form.name.value == ""){
-            $('#info').text = ("请输入名称!");
-            $('#info').show();
-            return;
-        }
-        if(form.url.value == ""){
-            $('#info').text("请输入链接!");
-            $('#info').show();
-            return;
-        }
-        if(form.position.value == ""){
-            $('#info').text("请输入排序!");
-            $('#info').show();
-            return;
-        }
-        $.ajax({
-            url:   "<%=ctx%>/menu/saveOrUpdate",
-            data:  $('#menuform').serialize(),
-            async: false,
-            type:  "POST",
-            success:function(result){
-                if(result.flag==true){
-                    $('#info').removeClass('alert-warning');
-                    $('#info').addClass('alert-success');
-                    $('#info').text(result.data);
-                    $('#info').show();
-                }
-            }
-        });
-        setTimeout("self.location.reload()",3000);
-    }
     //点击edit按钮
     function edit(id){
-        $('#menuid').val(id);
+        $('#adminid').val(id);
         $.ajax({
-            url:'<%=ctx%>/menu/getOne?id='+id,
-            type:'POST',
-            async:false,
+           url:'<%=ctx%>/theme/getOne?id='+id,
+           type:'POST',
+           async:false,
             success:function(result){
                 if(result.flag){
                     var obj = result.data;
-                    $('#id').val(obj.id);
+                    $('#themeid').val(obj.id);
+                    $('#typeid').val(obj.typeid);
                     $('#name').val(obj.name);
-                    $('#url').val(obj.url);
                     $('#position').val(obj.position);
+                    $('#description').val(obj.description);
+                    $('#imgsrc').val(obj.imgsrc);
+                    $('#imgbox').attr('src',"<%=ctx%>/picture/getPicture?path=" + obj.imgsrc)
                     $('#btn_add').text('修改');
 
                 }
@@ -309,7 +342,7 @@
         var result = confirm("确定删除？");
         if(result){
             $.ajax({
-                url:'<%=ctx%>/menu/delete?id='+id,
+                url:'<%=ctx%>/theme/delete?id='+id,
                 type:'POST',
                 async:false,
                 success:function(result){
@@ -321,34 +354,16 @@
                     }
                 }
 
-            });
+        });
         }
     }
-    function upload() {
-        $("#uploading1").show();
-        var formData = new FormData();
-        formData.append("imgFile", document.getElementById("fileInput").files[0]);
-        $.ajax({
-            url: "/picture/upload",
-            type: "POST",
-            data: formData,
-            contentType: false,
-            processData: false,
-            success: function (result) {
-                if (result.flag) {
-                    $('#imgsrc').val(result.data);
-                    console.log(result['data']);
-                }else{
-                    alert('上传失败');
-                }
-            }
-        });
+
+    //打开文字列表
+    function  list(id) {
+        window.open("<%=ctx%>/article/list", "_blank");
     }
-    $('.testLi').on('mouseenter', function() {
-        $('.img').stop().fadeIn();
-    }).on('mouseleave', function() {
-        $('.img').stop().fadeOut();
-    })
+
+
 </script>
 <script type="text/javascript">
     window.jQuery || document.write("<script src='<%=ctx%>/statics/js/jquery-2.0.3.min.js'>"+"<"+"script>");
@@ -368,6 +383,6 @@
 <script src="<%=ctx%>/statics/js/flot/jquery.flot.resize.min.js"></script>
 <script src="<%=ctx%>/statics/js/ace-elements.min.js"></script>
 <script src="<%=ctx%>/statics/js/ace.min.js"></script>
-<script src="<%=ctx%>/statics/js/ace-extra.min.js"/>
+</body>
 
 </html>

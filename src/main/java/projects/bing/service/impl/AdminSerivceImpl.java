@@ -2,12 +2,11 @@ package projects.bing.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import projects.bing.dao.AdminDao;
-import projects.bing.entity.Admin;
+import projects.bing.dao.AdminUserDao;
+import projects.bing.entity.AdminUser;
 import projects.bing.service.AdminService;
 import projects.bing.utils.MapUtils;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -18,45 +17,45 @@ import java.util.UUID;
 @Service
 public class AdminSerivceImpl implements AdminService {
     @Autowired
-    private AdminDao adminDao;
+    private AdminUserDao adminUserDao;
 
     //登录验证
     @Override
-    public Admin validate(String account) {
-        return adminDao.validate(account);
+    public AdminUser validate(String account) {
+        return adminUserDao.validate(account);
     }
     //添加用户
     @Override
-    public int add(Admin admin) {
+    public int add(AdminUser admin) {
         admin.setId(UUID.randomUUID().toString());
-        return adminDao.add(admin);
+        return adminUserDao.add(admin);
     }
 
     //删除用户
     @Override
     public int delete(String id) {
-        return adminDao.delete(id);
+        return adminUserDao.delete(id);
     }
 
     //更新
     @Override
-    public int update(Admin admin) {
-        return adminDao.update(admin);
+    public int update(AdminUser admin) {
+        return adminUserDao.update(admin);
     }
 
     //查询一个
     @Override
-    public Admin getOne(String id) {
-        return adminDao.getOne(id);
+    public AdminUser getOne(String id) {
+        return adminUserDao.getOne(id);
     }
 
     //获得所有
     @Override
-    public List<Admin> getAll() {
-        List<Admin> adminList = adminDao.getAll();
+    public List<AdminUser> getAll() {
+        List<AdminUser> adminList = adminUserDao.getAll();
         Map<String,String> map = MapUtils.getRoleMap();
         //循环将数字转变为角色名称
-        for (Admin admin: adminList) {
+        for (AdminUser admin: adminList) {
             admin.setTemp1(map.get(admin.getRole()+"")); //加上引号查找String类型的key 而不是integer
         }
         return adminList;

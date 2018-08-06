@@ -8,11 +8,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import projects.bing.dto.JsonResult;
-import projects.bing.entity.AdminUser;
 import projects.bing.entity.Menu;
+import projects.bing.entity.Theme;
+import projects.bing.entity.Types;
 import projects.bing.service.MenuService;
+import projects.bing.service.ThemeService;
 import projects.bing.service.TypesService;
-import  projects.bing.entity.Types;
 import projects.bing.utils.IdGen;
 
 import java.util.List;
@@ -22,37 +23,42 @@ import java.util.List;
  */
 
 @Controller
-@RequestMapping(value = "/types" )
-public class TypesController {
+@RequestMapping(value = "/theme" )
+public class ThemeController {
     @Autowired
-    private TypesService typesService;
+    private ThemeService themeService;
 
     @Autowired
     private MenuService menuService;
 
+    @Autowired
+    private TypesService typesService;
+
     @RequestMapping(value = "manage")
     public String typesForm(Model model){
-        List<Types> typesList = typesService.getAll();
-        model.addAttribute("typesList",typesList);
+        List<Theme> themeList = themeService.getAll();
+        model.addAttribute("themeList",themeList);
         List<Menu> menus = menuService.getAll();
         model.addAttribute("menus",menus);
-        return "typesForm";
+        List<Types> typesList = typesService.getAll();
+        model.addAttribute("typesList",typesList);
+        return "themeForm";
     }
 
     //新增或保存
-    @RequestMapping(value="addOrEdit" , method = RequestMethod.POST,
+    @RequestMapping(value="saveOrEdit" , method = RequestMethod.POST,
             produces = "application/json;charset=utf-8")
     @ResponseBody
-    public JsonResult saveOrEdit(Types types){
+    public JsonResult saveOrEdit(Theme theme){
         JsonResult jr ;
         String message = null;
         boolean flag = false;
-        if("".equals(types.getId())){  //新增
-            types.setId(IdGen.getUUID32());
-            flag = typesService.add(types) > 0  ? true : false;
+        if("".equals(theme.getId())){  //新增
+            theme.setId(IdGen.getUUID32());
+            flag = themeService.add(theme) > 0  ? true : false;
             message = "添加成功↖(^ω^)↗";
         }else{
-            flag = typesService.update(types) > 0 ? true : false;
+            flag = themeService.update(theme) > 0 ? true : false;
             message = "修改成功↖(^ω^)↗";
         }
         if(flag == false){
@@ -69,7 +75,7 @@ public class TypesController {
     public JsonResult getOne(String id){
         JsonResult jr ;
         boolean flag = true;
-        Types types = typesService.getOne(id);
+        Theme types = themeService.getOne(id);
         jr = new JsonResult(flag,types);
         return jr;
     }
@@ -81,7 +87,7 @@ public class TypesController {
     public JsonResult delete(String id){
         JsonResult jr ;
         boolean flag = false;
-        flag = typesService.delete(id) > 0 ? true : false  ;
+        flag = themeService.delete(id) > 0 ? true : false  ;
         jr = new JsonResult(flag,"");
         return jr;
     }

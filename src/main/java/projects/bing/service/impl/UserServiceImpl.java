@@ -3,9 +3,7 @@ package projects.bing.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import projects.bing.dao.UserDao;
-import projects.bing.entity.Queues;
 import projects.bing.entity.User;
-import projects.bing.service.QueuesService;
 import projects.bing.service.UserService;
 
 import java.util.Date;
@@ -20,9 +18,6 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserDao userDao;
-
-    @Autowired
-    private QueuesService queuesService;
 
     @Override
     public int add(User user) {
@@ -53,26 +48,19 @@ public class UserServiceImpl implements UserService {
     public String saveUserAndGetNum(String nickname, String queueid) {
         //查queue get tail  ， update tail++
         //查询用户是否存在  y 拿到User update set num  , n insert User 。
-        Queues queue = queuesService.getOne(queueid);
-        int  beforeNum = queue.getTail();
-        int afterNum = ++beforeNum;
-        queue.setTail(afterNum+"");
         User user = userDao.getByWxid(nickname);
         if(user == null){
             user = new User();
             user.setId(UUID.randomUUID().toString());
             user.setWxid(nickname);
             user.setNickname(nickname);
-            user.setMynumber(afterNum);
             user.setNumberTime(new Date());
             userDao.add(user);
         }else{
-            user.setMynumber(afterNum);
             user.setNumberTime(new Date());
             userDao.update(user);
         }
-        queuesService.update(queue);
-        return queue.getTail()+"";
+        return "";
     }
 
 }

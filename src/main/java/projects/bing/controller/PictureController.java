@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import projects.bing.dto.JsonResult;
-import projects.bing.service.MenuService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
@@ -22,10 +21,9 @@ import java.util.Date;
 @Controller
 @RequestMapping(value = "/picture")
 public class PictureController {
-    @Autowired
-    private MenuService menuService;
-    private final int MAX_SIZE = 1024 * 1024 * 2;   //限制图片的最大值为2M
-    private String[] extendNamesArray = {".jpg",".jpeg"};   //图片的扩展名数组，方面验证
+
+    private final int MAX_SIZE = 1024 * 1024 * 10;   //限制图片的最大值为2M
+    private String[] extendNamesArray = {".jpg",".jpeg",".png"};   //图片的扩展名数组，方面验证
     private String rootPath;                    //文件根路径
     private String imageNewPath;        //图片新路径（包含头像名以及扩展名）
     private String imageOldPath;        //图片在数据库中的原有路径（包含头像名以及扩展名）
@@ -51,7 +49,7 @@ public class PictureController {
         //获取上传图片的大小
         int imageSize = (int) image.getSize();
         //验证图片的扩展名是否符合要求
-        if((extendName.equals(extendNamesArray[0])||extendName.equals(extendNamesArray[1]))&&(imageSize<=MAX_SIZE)){
+        if((extendName.equals(extendNamesArray[0])||extendName.equals(extendNamesArray[1]))||extendName.equals(extendNamesArray[2])&&(imageSize<=MAX_SIZE)){
             rootPath = "D:/upload/menuPictures";
             File dir = new File(rootPath);
             if(!dir.exists()){
@@ -70,7 +68,7 @@ public class PictureController {
                 jr= new JsonResult<String>(false,"保存失败");
             }
         }else{      //图像格式不符合或者头像的大小大于2M
-            jr = new JsonResult<String>(false,"格式错误或图片大于2M");
+            jr = new JsonResult<String>(false,"格式错误或图片大于10M");
         }
         return jr;
     }

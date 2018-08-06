@@ -1,4 +1,5 @@
-<%@ page import="projects.bing.entity.Admin" %><%--
+<%@ page import="projects.bing.entity.Admin" %>
+<%@ page import="projects.bing.entity.AdminUser" %><%--
   Created by IntelliJ IDEA.
   User: yang
   Date: 2017/2/19
@@ -30,7 +31,7 @@
             <a href="#" class="navbar-brand">
                 <small>
                     <i class="icon-leaf"></i>
-                    Restaurant Management System
+                    TODO Management System
                 </small>
             </a><!-- /.brand -->
         </div><!-- /.navbar-header -->
@@ -40,7 +41,7 @@
 
                 <li class="light-blue">
                    <% HttpSession s = request.getSession();
-                    Admin a = (Admin)s.getAttribute("admin");
+                       AdminUser a = (AdminUser)s.getAttribute("admin");
                     %>
                     欢迎,<%=a.getName() %> &nbsp;&nbsp;
                 </li>
@@ -68,44 +69,14 @@
             </script>
 
             <ul class="nav nav-list">
-                <li>
-                    <a href="<%=ctx%>/admin/index1">
-                        <i class="icon-dashboard"></i>
-                        <span class="menu-text"> 数据统计 </span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="<%=ctx%>/queues/queuesForm" >
-                        <i class="icon-list"></i>
-                        <span class="menu-text"> 队列管理 </span>
-                    </a>
-                </li>
-
-                <li  class="active">
-                    <a href="<%=ctx%>/types/typesForm" >
-                        <i class="icon-list"></i>
-                        <span class="menu-text"> 分类管理 </span>
-                    </a>
-                </li>
-                <li>
-                    <a href="<%=ctx%>/menu/menuForm" >
-                        <i class="icon-list"></i>
-                        <span class="menu-text"> 菜单管理 </span>
-                    </a>
-                </li>
-                <li>
-                    <a href="<%=ctx%>/admin/adminForm" >
-                        <i class="icon-list"></i>
-                        <span class="menu-text"> 用户管理 </span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#" >
-                        <i class="icon-list"></i>
-                        <span class="menu-text"> 订单管理 </span>
-                    </a>
-                </li>
+                <c:forEach var="menu" items="${menus}" varStatus="index">
+                    <li>
+                        <a href="<%=ctx%>${menu.url}" >
+                            <i class="icon-list"></i>
+                            <span class="menu-text"> ${menu.name} </span>
+                        </a>
+                    </li>
+                </c:forEach>
             </ul><!-- /.nav-list -->
 
             <div class="sidebar-collapse" id="sidebar-collapse">

@@ -4,53 +4,37 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="projects.bing.dao.MenuDao">
 
-    <!--新增 -->
-    <insert id="add"  parameterType="projects.bing.entity.Foods">
-        INSERT INTO foods (id,typeid,name,price,description,imgsrc,temp1,temp2,temp3)
-        VALUES (#{id},#{type.id},#{name},#{price},#{description},#{imgsrc},#{temp1},#{temp2},#{temp3})
+
+    <insert id="add"  parameterType="projects.bing.entity.Menu">
+        INSERT INTO menu (id,name,url,position ,temp1,temp2,temp3)
+        VALUES (#{id},#{name},#{url},#{position},#{temp1},#{temp2},#{temp3})
     </insert>
 
-    <!--更新 -->
-    <update id="update"  parameterType="projects.bing.entity.Foods">
-        UPDATE  foods  SET
-          typeid = #{type.id},
-          price = #{price},
-          description = #{description},
+
+    <update id="update"  parameterType="projects.bing.entity.Menu">
+        UPDATE  menu  SET
           name = #{name},
-          imgsrc = #{imgsrc},
+          url = #{url},
+          position = #{position},
           temp1 = #{temp1},
           temp2 = #{temp2},
           temp3 = #{temp3}
         WHERE id  =  #{id}
     </update>
 
-    <!--删除-->
+
     <delete id="delete" parameterType="java.lang.String" >
-        DELETE FROM foods WHERE  id = #{id}
+        DELETE FROM menu WHERE  id = #{id}
     </delete>
 
-    <!--查询一个 -->
-    <select id="getOne" resultType="projects.bing.entity.Foods" parameterType="java.lang.String">
-       select    a.id,
-          a.name,
-          a.price,
-          a.description,
-          a.imgsrc,
-          b.id "type.id",
-          b.name "type.name"
-        from foods a ,types b where a.typeid = b.id  and a.id = #{id}
+
+    <select id="getOne" resultType="projects.bing.entity.Menu" parameterType="java.lang.String">
+        select * from Menu where id = #{id}
     </select>
 
     <!--查询全部 -->
-    <select id="getAll" resultType="projects.bing.entity.Foods" >
-        select
-          a.id,
-          a.name,
-          a.price,
-          a.description,
-          a.imgsrc,
-          b.id "type.id",
-          b.name "type.name"
-        from foods a ,types b where a.typeid = b.id
+    <select id="getAll" resultType="projects.bing.entity.Menu" >
+        select * from menu order by position ASC
     </select>
+
 </mapper>

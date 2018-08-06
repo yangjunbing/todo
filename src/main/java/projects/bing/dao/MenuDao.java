@@ -1,10 +1,6 @@
 package projects.bing.dao;
 
-import projects.bing.entity.Foods;
-import projects.bing.service.BaseService;
+import projects.bing.entity.Menu;
 
-/**
- * Created by yang on 2017/2/26.
- */
-public interface MenuDao extends BaseDao<Foods> {
+public interface MenuDao extends BaseDao<Menu> {
 }

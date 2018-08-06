@@ -2,15 +2,15 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="projects.bing.dao.AdminDao">
+<mapper namespace="projects.bing.dao.AdminUserDao">
     <!--登录验证 -->
-    <select id="validate" resultType="projects.bing.entity.Admin" parameterType="java.lang.String">
-        select * from admin where account = #{account}
+    <select id="validate" resultType="projects.bing.entity.AdminUser" parameterType="java.lang.String">
+        select * from Admin_User where account = #{account}
     </select>
 
     <!--新增 -->
-    <insert id="add"  parameterType="projects.bing.entity.Admin">
-        INSERT INTO ADMIN (id,account,password,name,role,temp1,temp2,temp3)
+    <insert id="add"  parameterType="projects.bing.entity.AdminUser">
+        INSERT INTO Admin_User (id,account,password,name,role,temp1,temp2,temp3)
         VALUES (#{id},#{account},#{password},#{name},#{role},
                 #{temp1},#{temp2},#{temp3})
 
@@ -18,8 +18,8 @@
     </insert>
 
     <!--更新 -->
-    <update id="update"  parameterType="projects.bing.entity.Admin">
-        UPDATE  ADMIN  SET
+    <update id="update"  parameterType="projects.bing.entity.AdminUser">
+        UPDATE  Admin_User  SET
           account = #{account},
           password = #{password},
           name = #{name},
@@ -32,17 +32,17 @@
 
     <!--删除-->
     <delete id="delete" parameterType="java.lang.String" >
-        DELETE FROM admin WHERE  id = #{id}
+        DELETE FROM Admin_User WHERE  id = #{id}
     </delete>
 
     <!--查询一个 -->
-    <select id="getOne" resultType="projects.bing.entity.Admin" parameterType="java.lang.String">
-        select * from admin where id = #{id}
+    <select id="getOne" resultType="projects.bing.entity.AdminUser" parameterType="java.lang.String">
+        select * from Admin_User where id = #{id}
     </select>
 
     <!--查询全部 -->
-    <select id="getAll" resultType="projects.bing.entity.Admin" >
-        select * from admin
+    <select id="getAll" resultType="projects.bing.entity.AdminUser" >
+        select * from Admin_User
     </select>
 
 </mapper>

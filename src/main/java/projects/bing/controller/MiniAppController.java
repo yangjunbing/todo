@@ -1,3 +1,4 @@
+/*
 package projects.bing.controller;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -10,12 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import projects.bing.dto.JsonResult;
-import projects.bing.entity.Foods;
-import projects.bing.entity.ParamEntity;
-import projects.bing.entity.Queues;
-import projects.bing.entity.Types;
-import projects.bing.service.MenuService;
-import projects.bing.service.QueuesService;
+
 import projects.bing.service.TypesService;
 import projects.bing.service.UserService;
 import projects.bing.utils.EmojiUtils;
@@ -25,17 +21,15 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by yang on 2017/3/19.
- */
+
 @Controller
 @RequestMapping(value = "miniApp" )
 public class MiniAppController {
-    @Autowired
-    private QueuesService queuesService;
+    //@Autowired
+    //private QueuesService queuesService;
 
-    @Autowired
-    private UserService userService;
+   // @Autowired
+   // private UserService userService;
 
     @Autowired
     private TypesService typesService;
@@ -117,9 +111,10 @@ public class MiniAppController {
         Gson gson = new Gson();
         return gson.toJson(orderList);
     }
-    /***
+**
      * 确认订单
-     */
+
+
 
     //获取订单集合
     @RequestMapping(value = "submitOrder" ,method = RequestMethod.POST,produces = "application/json;charset=utf-8")
@@ -136,7 +131,7 @@ public class MiniAppController {
         return null;
     }
 }
-/*    @RequestMapping(value="getOne" , method = RequestMethod.POST,
+    @RequestMapping(value="getOne" , method = RequestMethod.POST,
             produces = "application/json;charset=utf-8")
     @ResponseBody
     public JsonResult getOne(String id){
@@ -145,5 +140,7 @@ public class MiniAppController {
         Admin admin = adminService.getOne(id);
         jr = new JsonResult(flag,admin);
         return jr;
-    }*/
+    }
 
+
+*/

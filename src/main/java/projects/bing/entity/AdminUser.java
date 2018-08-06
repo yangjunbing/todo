@@ -5,12 +5,12 @@ import java.io.Serializable;
 /**
  * Created by yang on 2017/2/18.
  */
-public class Admin implements Serializable {
+public class AdminUser implements Serializable {
     private String id;
     private String account;
     private String password;
     private String name;
-    private int role;//角色  0超级管理员    1前台   2服务员   3厨师
+    private int role;//角色
     private String temp1;
     private String temp2;
     private String temp3;
