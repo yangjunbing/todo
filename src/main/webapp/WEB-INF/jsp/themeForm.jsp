@@ -360,7 +360,7 @@
 
     //打开文字列表
     function  list(id) {
-        window.open("<%=ctx%>/article/list", "_blank");
+        window.open("<%=ctx%>/article/list?themeid="+id, "_blank");
     }
 
 

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="projects.bing.dao.ArticleDao">
+
+    <!--新增 -->
+    <insert id="add"  parameterType="projects.bing.entity.Article">
+        INSERT INTO Article (id,themeid,themeName,title,content,author,
+        publicDate,favorateNum,commentNum,readNum,finishNum,
+        temp1,temp2,temp3,temp4,temp5)
+        VALUES (#{id},#{themeid},#{themeName},#{title},#{content},#{author},
+        #{publicDate},#{favorateNum},#{commentNum},#{readNum},#{finishNum},
+        #{temp1},#{temp2},#{temp3},#{temp4},#{temp5})
+    </insert>
+
+    <select id="getByTheme" resultType="projects.bing.entity.Article" parameterType="java.lang.String">
+        select * from Article  where themeid = #{themeid}
+    </select>
+<!--
+
+    &lt;!&ndash;更新 &ndash;&gt;
+    <update id="update"  parameterType="projects.bing.entity.Article">
+        UPDATE  Article  SET
+          name = #{name},
+          priority = #{priority},
+          temp1 = #{temp1},
+          temp2 = #{temp2},
+          temp3 = #{temp3}
+        WHERE id  =  #{id}
+    </update>
+
+    &lt;!&ndash;删除&ndash;&gt;
+    <delete id="delete" parameterType="java.lang.String" >
+        DELETE FROM Article WHERE  id = #{id}
+    </delete>
+
+    &lt;!&ndash;查询一个 &ndash;&gt;
+    <select id="getOne" resultType="projects.bing.entity.Article" parameterType="java.lang.String">
+        select * from Article where id = #{id}
+    </select>
+
+    &lt;!&ndash;查询全部 &ndash;&gt;
+    <select id="getAll" resultType="projects.bing.entity.Article" parameterType="java.lang.String">
+        select * from Article order by priority ASC
+    </select>
+-->
+
+</mapper>
