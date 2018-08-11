@@ -45,7 +45,7 @@
                     欢迎,<%=a.getName() %> &nbsp;&nbsp;
                 </li>
                 <li class="light-blue">
-                    <a href="<%=ctx%>/admin/login"><small>退出</small> </a>
+                    <a href="<%=ctx%>/adminbing/login"><small>退出</small> </a>
                 </li>
             </ul>
         </div><!-- /.navbar-header -->

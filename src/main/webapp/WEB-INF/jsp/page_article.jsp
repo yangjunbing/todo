@@ -83,43 +83,46 @@
             </div>
         </div>
 
-        <div class="media search-media">
-            <div class="media-left">
-                <img class="media-object" src="" />
-            </div>
-
-            <div class="media-body">
-                <div>
-                    <h2 class="media-heading">
-                        <a href="#" class="blue">Media heading</a>
-                    </h2>
+        <c:forEach items="${articleList}" var="article">
+            <div class="media search-media">
+                <div class="media-left">
+                    <img class="media-object" src="" />
                 </div>
-                <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis
-                    Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis
-                    Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis
-                    Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis...</p>
 
-                <div class="search-actions text-center">
-                    <div class="action-buttons bigger-125">
-                        <a href="#">
-                            阅读（9999）
-                        </a>
+                <div class="media-body">
+                    <div>
+                        <h2 class="media-heading">
+                            <a href="javascript:void(0)" onclick="edit('${theme.id}','${article.id}')" class="blue">${article.title}</a>
+                        </h2>
+                    </div>
+                    <p>
+                        ${article.content}
+                    </p>
 
-                        <a href="#">
-                            点赞（9999）
-                        </a>
+                    <div class="search-actions text-center">
+                        <div class="action-buttons bigger-125">
+                            <a href="#">
+                                阅读（${article.readNum}）
+                            </a>
 
-                        <a href="#">
-                            评论（9999）
-                        </a>
+                            <a href="#">
+                                点赞（${article.favorateNum}）
+                            </a>
 
-                        <a href="#">
-                            完成（9999）
-                        </a>
+                            <a href="#">
+                                评论（${article.commentNum}）
+                            </a>
+
+                            <a href="#">
+                                完成（${article.finishNum}）
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+
+        </c:forEach>
+
 
     </div>
 </div>
@@ -151,7 +154,7 @@
 <script src="<%=ctx%>/statics/js/ace.min.js"></script>
 <script >
     function  edit(themeid,id) {
-        window.open("<%=ctx%>/article/edit?themeid="+themeid + "&id="+ id, "_blank");
+        window.open("<%=ctx%>/article/edit?themeid=" + themeid + "&id="+ id, "_blank");
     }
 </script>
 </body>

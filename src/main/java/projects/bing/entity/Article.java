@@ -9,6 +9,7 @@ public class Article {
     private String content;
     private String author;
     private String publishDate;
+    private int position;
     private int favorateNum;
     private int commentNum;
     private int readNum;
@@ -18,6 +19,15 @@ public class Article {
     private String temp3;
     private String temp4;
     private String temp5;
+    private String imgsrc;
+
+    public String getImgsrc() {
+        return imgsrc;
+    }
+
+    public void setImgsrc(String imgsrc) {
+        this.imgsrc = imgsrc;
+    }
 
     public String getId() {
         return Id;
@@ -145,5 +155,13 @@ public class Article {
 
     public void setTemp5(String temp5) {
         this.temp5 = temp5;
+    }
+
+    public int getPosition() {
+        return position;
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
     }
 }

@@ -23,7 +23,7 @@ import java.util.List;
  * Created by yang on 2017/2/19.
  */
 @Controller
-@RequestMapping(value = "/admin")
+@RequestMapping(value = "/adminbing")
 public class AdminController {
     @Autowired
     private AdminService adminService;

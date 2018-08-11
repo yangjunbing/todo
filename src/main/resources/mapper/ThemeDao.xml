@@ -13,7 +13,7 @@
 
     <update id="update"  parameterType="projects.bing.entity.Theme">
         UPDATE  Theme  SET
-          tpeid = #{typeid},
+          typeid = #{typeid},
           name = #{name},
           imgsrc = #{imgsrc},
           description = #{description},

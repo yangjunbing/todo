@@ -13,6 +13,8 @@ import projects.bing.service.ArticleService;
 import projects.bing.service.ThemeService;
 import projects.bing.utils.IdGen;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -52,6 +54,10 @@ public class ArticleController {
             produces = "application/json;charset=utf-8")
     @ResponseBody
     public JsonResult saveOrEdit(Article article){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = new Date();
+        String str = sdf.format(date);
+        article.setPublishDate(str);
         JsonResult jr ;
         String message = null;
         boolean flag = false;

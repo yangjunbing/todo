@@ -4,7 +4,7 @@ package projects.bing.entity;
  * Created by yang on 2017/2/18.
  */
 public class Types {
-   private String id;
+    private String id;
     private String name;
     private int priority;
     private String temp1;

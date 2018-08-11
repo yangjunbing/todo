@@ -6,44 +6,53 @@
 
     <!--新增 -->
     <insert id="add"  parameterType="projects.bing.entity.Article">
-        INSERT INTO Article (id,themeid,themeName,title,content,author,
-        publicDate,favorateNum,commentNum,readNum,finishNum,
-        temp1,temp2,temp3,temp4,temp5)
+        INSERT INTO Article (id,themeid,theme_Name,title,content,author,
+        publish_Date,favorate_Num,comment_Num,read_Num,finish_Num,
+        temp1,temp2,temp3,temp4,temp5,position,imgsrc)
         VALUES (#{id},#{themeid},#{themeName},#{title},#{content},#{author},
-        #{publicDate},#{favorateNum},#{commentNum},#{readNum},#{finishNum},
-        #{temp1},#{temp2},#{temp3},#{temp4},#{temp5})
+        #{publishDate},#{favorateNum},#{commentNum},#{readNum},#{finishNum},
+        #{temp1},#{temp2},#{temp3},#{temp4},#{temp5},#{position},#{imgsrc})
     </insert>
 
     <select id="getByTheme" resultType="projects.bing.entity.Article" parameterType="java.lang.String">
-        select * from Article  where themeid = #{themeid}
+        select * from Article  where themeid = #{themeid} order by position asc
     </select>
-<!--
 
-    &lt;!&ndash;更新 &ndash;&gt;
+
+    <!--更新-->
     <update id="update"  parameterType="projects.bing.entity.Article">
         UPDATE  Article  SET
-          name = #{name},
-          priority = #{priority},
-          temp1 = #{temp1},
-          temp2 = #{temp2},
-          temp3 = #{temp3}
+        id=#{id},
+        themeid=#{themeid},
+        theme_Name=#{themeName},
+        title=#{title},
+        content=#{content},
+        author=#{author},
+        publish_Date=#{publishDate},
+        favorate_Num=#{favorateNum},
+        comment_Num=#{commentNum},
+        read_Num=#{readNum},
+        finish_Num=#{finishNum},
+        temp1=#{temp1},
+        temp2=#{temp2},
+        temp3=#{temp3},
+        temp4=#{temp4},
+        temp5=#{temp5},
+        position=#{position},
+        imgsrc = #{imgsrc}
         WHERE id  =  #{id}
     </update>
 
-    &lt;!&ndash;删除&ndash;&gt;
+    <!--删除-->
     <delete id="delete" parameterType="java.lang.String" >
         DELETE FROM Article WHERE  id = #{id}
     </delete>
 
-    &lt;!&ndash;查询一个 &ndash;&gt;
+    <!--查询一个-->
     <select id="getOne" resultType="projects.bing.entity.Article" parameterType="java.lang.String">
         select * from Article where id = #{id}
     </select>
 
-    &lt;!&ndash;查询全部 &ndash;&gt;
-    <select id="getAll" resultType="projects.bing.entity.Article" parameterType="java.lang.String">
-        select * from Article order by priority ASC
-    </select>
--->
+
 
 </mapper>

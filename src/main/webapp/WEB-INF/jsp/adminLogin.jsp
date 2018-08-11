@@ -45,7 +45,7 @@
 
                                     <div class="space-6"></div>
 
-                                    <form id="loginForm" action="<%=ctx%>/admin/index" method="post">
+                                    <form id="loginForm" action="<%=ctx%>/adminbing/index" method="post">
                                         <fieldset>
                                             <label class="block clearfix">
 														<span class="block input-icon input-icon-right">
