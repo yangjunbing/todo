@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="<%=ctx%>/statics/css/ace-skins.min.css" />
     <script src="<%=ctx%>/statics/js/ace-extra.min.js"></script>
 </head>
-<body style="padding: 20px">
+<body style="padding: 20px;width: 1000px;text-align: center">
 
 <!-- 加载编辑器的容器 -->
 <script id="container" name="content" type="text/plain">
